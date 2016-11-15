@@ -21,20 +21,47 @@ class Tasks extends AbstractProcessEndpoint {
         $name,
         $event,
         $running,
-        $success,
-        $message
+        $success = null,
+        $message = ''
     ) {
+        assert(
+            is_string($name),
+            new \RuntimeException(
+                sprintf('Parameter "$name" should be a string. (%s)', $name)
+            )
+        );
+        assert(
+            is_string($event),
+            new \RuntimeException(
+                sprintf('Parameter "$event" should be a string. (%s)', $event)
+            )
+        );
+
+        $array = [
+            'name'    => $name,
+            'event'   => $event,
+            'running' => $running
+        ];
+
+        if (! empty($message)) {
+            $array['message'] = $message;
+        }
+
+        if ($success !== null) {
+            assert(
+                is_bool($success),
+                new \RuntimeException(
+                    sprintf('Parameter "$success" should be a bool. (%s)', $success)
+                )
+            );
+
+            $array['success'] = $success;
+        }
 
         return $this->sendPost(
             sprintf('/profiles/%s/processes/%s/tasks', $this->userName, $this->processId),
             [],
-            [
-                'name'    => $name,
-                'event'   => $event,
-                'running' => $running,
-                'success' => $success,
-                'message' => $message
-            ]
+            $array
         );
     }
 
@@ -60,6 +87,13 @@ class Tasks extends AbstractProcessEndpoint {
      * @return array Response
      */
     public function getOne($taskId) {
+        assert(
+            is_int($taskId),
+            new \RuntimeException(
+                sprintf('Parameter "$taskId" should be a string. (%s)', $taskId)
+            )
+        );
+
         return $this->sendGet(
             sprintf('/profiles/%s/processes/%s/tasks/%s', $this->userName, $this->processId, $taskId)
         );
@@ -79,19 +113,59 @@ class Tasks extends AbstractProcessEndpoint {
         $name,
         $event,
         $running,
-        $success,
-        $message
+        $success = null,
+        $message = ''
     ) {
+        assert(
+            is_int($taskId),
+            new \RuntimeException(
+                sprintf('Parameter "$taskId" should be a string. (%s)', $taskId)
+            )
+        );
+        assert(
+            is_string($name),
+            new \RuntimeException(
+                sprintf('Parameter "$name" should be a string. (%s)', $name)
+            )
+        );
+        assert(
+            is_string($event),
+            new \RuntimeException(
+                sprintf('Parameter "$event" should be a string. (%s)', $event)
+            )
+        );
+        assert(
+            is_bool($running),
+            new \RuntimeException(
+                sprintf('Parameter "$running" should be a bool. (%s)', $running)
+            )
+        );
+
+        $array = [
+            'name'    => $name,
+            'event'   => $event,
+            'running' => $running
+        ];
+
+        if (! empty($message)) {
+            $array['message'] = $message;
+        }
+
+        if ($success !== null) {
+            assert(
+                is_bool($success),
+                new \RuntimeException(
+                    sprintf('Parameter "$success" should be a bool. (%s)', $success)
+                )
+            );
+
+            $array['success'] = $success;
+        }
+
         return $this->sendPatch(
             sprintf('/profiles/%s/processes/%s/tasks/%s', $this->userName, $this->processId, $taskId),
             [],
-            [
-                'name'    => $name,
-                'event'   => $event,
-                'running' => $running,
-                'success' => $success,
-                'message' => $message
-            ]
+            $array
         );
     }
 }
