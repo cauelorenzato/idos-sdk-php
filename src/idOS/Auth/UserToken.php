@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Auth;
 
 use Lcobucci\JWT\Builder;
@@ -33,9 +31,9 @@ class UserToken extends AbstractAuth {
      * @param string $credentialPrivateKey
      */
     public function __construct(
-        string $userName,
-        string $credentialPublicKey,
-        string $credentialPrivateKey
+        $userName,
+        $credentialPublicKey,
+        $credentialPrivateKey
     ) {
         $this->userName             = $userName;
         $this->credentialPublicKey  = $credentialPublicKey;
@@ -47,7 +45,7 @@ class UserToken extends AbstractAuth {
      *
      * @return string userToken
      */
-    public function getToken() : string {
+    public function getToken() {
         if (($this->token === null) || ($this->token->isExpired())) {
             $jwtBuilder = new Builder();
             $jwtBuilder->set('iss', $this->credentialPublicKey);

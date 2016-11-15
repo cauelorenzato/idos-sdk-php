@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Auth;
 
 class IdentityToken extends AbstractAuth {
@@ -12,7 +10,7 @@ class IdentityToken extends AbstractAuth {
      *
      * @param string $token the identityToken
      */
-    public function __construct(string $token) {
+    public function __construct($token) {
         $this->token = $token;
     }
 
@@ -21,7 +19,7 @@ class IdentityToken extends AbstractAuth {
      *
      * @return string identityToken
      */
-    public function getToken() : string {
+    public function getToken() {
         return $this->token;
     }
 }

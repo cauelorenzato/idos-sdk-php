@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Section;
 
 use GuzzleHttp\Client;
@@ -30,7 +28,7 @@ abstract class AbstractSection implements SectionInterface {
      *
      * @return string $className
      */
-    protected function getEndpointClassName(string $name) : string {
+    protected function getEndpointClassName($name) {
         $className = sprintf(
             '%s\\%s',
             str_replace('Section', 'Endpoint', get_class($this)),
@@ -57,7 +55,7 @@ abstract class AbstractSection implements SectionInterface {
      *
      * @return string $className
      */
-    protected function getSectionClassName(string $name) : string {
+    protected function getSectionClassName($name) {
         $className = sprintf(
             '%s\\%s',
             get_class($this),
@@ -87,7 +85,7 @@ abstract class AbstractSection implements SectionInterface {
     public function __construct(
         AuthInterface $authentication,
         Client $client,
-        bool $throwExceptions = false
+        $throwExceptions = false
     ) {
         $this->authentication  = $authentication;
         $this->client          = $client;

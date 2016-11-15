@@ -32,7 +32,7 @@ abstract class AbstractUnit extends \PHPUnit_Framework_TestCase {
      *
      * @return the method result.
      */
-    protected function invokeMethod(&$object, string $method, array $parameters = []) {
+    protected function invokeMethod(&$object, $method, array $parameters = []) {
         $reflection = new \ReflectionClass(get_class($object));
         $method     = $reflection->getMethod($method);
         $method->setAccessible(true);
@@ -47,7 +47,7 @@ abstract class AbstractUnit extends \PHPUnit_Framework_TestCase {
      * @param string $property the name of the property
      * @param $value the vaue of the property
      */
-    protected function setPropertyValue($object, string $property, $value) {
+    protected function setPropertyValue($object, $property, $value) {
         $reflection = new \ReflectionClass($object);
         $property   = $reflection->getProperty($property);
         $property->setAccessible(true);
@@ -62,7 +62,7 @@ abstract class AbstractUnit extends \PHPUnit_Framework_TestCase {
      *
      * @return the value of the property
      */
-    protected function getPropertyValue($object, string $property) {
+    protected function getPropertyValue($object, $property) {
         $reflection = new \ReflectionClass($object);
         $property   = $reflection->getProperty($property);
         $property->setAccessible(true);

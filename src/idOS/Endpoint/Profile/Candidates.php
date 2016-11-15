@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Endpoint\Profile;
 
 /**
@@ -15,7 +13,7 @@ class Candidates extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function listAll(array $filter = []) {
+    public function listAll($filter = []) {
         return $this->sendGet(
             sprintf('/profiles/%s/candidates', $this->userName),
             $filter
@@ -32,10 +30,29 @@ class Candidates extends AbstractProfileEndpoint {
      * @return array Response
      */
     public function createNew(
-        string $attribute,
-        string $value,
-        float $support
-    ) : array {
+        $attribute,
+        $value,
+        $support
+    ) {
+        assert(
+            is_string($attribute),
+            new \RuntimeException(
+                sprintf('Parameter "$attribute" should be a string. (%s)', $attribute)
+            )
+        );
+        assert(
+            is_string($value),
+            new \RuntimeException(
+                sprintf('Parameter "$value" should be a string. (%s)', $value)
+            )
+        );
+        assert(
+            is_float($support),
+            new \RuntimeException(
+                sprintf('Parameter "$support" should be a float. (%s)', $support)
+            )
+        );
+
         return $this->sendPost(
             sprintf('/profiles/%s/candidates', $this->userName),
             [],
@@ -54,7 +71,7 @@ class Candidates extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function deleteAll(array $filters = []) : array {
+    public function deleteAll($filters = []) {
         return $this->sendDelete(
             sprintf('/profiles/%s/candidates', $this->userName),
             $filters

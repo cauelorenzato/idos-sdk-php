@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS;
 
 class Auth {
@@ -57,9 +55,9 @@ class Auth {
      * @param int    $authType
      */
     public function __construct(
-        string $publicKey,
-        string $privateKey,
-        int $authType
+        $publicKey,
+        $privateKey,
+        $authType
     ) {
         $this->publicKey  = $publicKey;
         $this->privateKey = $privateKey;
@@ -71,7 +69,7 @@ class Auth {
      *
      * @param string $publicKey
      */
-    public function setPublicKey(string $publicKey) : self {
+    public function setPublicKey($publicKey) {
         $this->publicKey = $publicKey;
 
         return $this;
@@ -82,7 +80,7 @@ class Auth {
      *
      * @return string publicKey
      */
-    public function getPublicKey() : string {
+    public function getPublicKey() {
         return $this->publicKey;
     }
 
@@ -91,7 +89,7 @@ class Auth {
      *
      * @param string $privateKey
      */
-    public function setPrivateKey(string $privateKey) : self {
+    public function setPrivateKey($privateKey) {
         $this->privateKey = $privateKey;
 
         return $this;
@@ -102,7 +100,7 @@ class Auth {
      *
      * @return string privateKey
      */
-    public function getPrivateKey() : string {
+    public function getPrivateKey() {
         return $this->privateKey;
     }
 
@@ -111,7 +109,7 @@ class Auth {
      *
      * @param int $authType
      */
-    public function setAuthType(int $authType) : self {
+    public function setAuthType($authType) {
         $this->authType = $authType;
 
         return $this;
@@ -122,7 +120,7 @@ class Auth {
      *
      * @return int authType
      */
-    public function getAuthType() : int {
+    public function getAuthType() {
         return $this->authType;
     }
 
@@ -133,7 +131,7 @@ class Auth {
      *
      * @return string userToken
      */
-    public function getUserToken(string $userName) : string {
+    public function getUserToken($userName) {
         if (isset($this->userToken[$userName])) {
             return $this->userToken[$userName];
         }
@@ -144,7 +142,7 @@ class Auth {
      *
      * @return string credentialToken
      */
-    public function getCredentialToken() : string {
+    public function getCredentialToken() {
         return $this->credentialToken;
     }
 
@@ -153,7 +151,7 @@ class Auth {
      *
      * @param string $token
      */
-    public function setIdentityToken(string $token) : self {
+    public function setIdentityToken($token) {
         $this->identityToken = $token;
 
         return $this;
@@ -164,7 +162,7 @@ class Auth {
      *
      * @return string handlerToken
      */
-    public function getHandlerToken() : string {
+    public function getHandlerToken() {
         return $this->handlerToken;
     }
 
@@ -173,7 +171,7 @@ class Auth {
      *
      * @return string identityToken
      */
-    public function getIdentityToken() : string {
+    public function getIdentityToken() {
         return $this->identityToken;
     }
 
@@ -182,7 +180,7 @@ class Auth {
      *
      * @return string header
      */
-    public function getHeader() : string {
+    public function getHeader() {
         switch ($this->authType) {
             case self::CREDENTIAL:
                 return sprintf('CredentialToken %s', $this->getCredentialToken());
@@ -198,7 +196,7 @@ class Auth {
      *
      * @return string query
      */
-    public function getQuery() : string {
+    public function getQuery() {
         switch ($this->authType) {
             case self::CREDENTIAL:
                 return sprintf('credentialToken=%s', $this->getCredentialToken());

@@ -1,12 +1,9 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Section\Profile;
 
 use GuzzleHttp\Client;
 use idOS\Auth\AuthInterface;
-use idOS\Endpoint\EndpointInterface;
 use idOS\Section\AbstractSection;
 
 class Process extends AbstractSection {
@@ -25,14 +22,15 @@ class Process extends AbstractSection {
      * @param bool|bool     $throwsExceptions
      */
     public function __construct(
-        int $processId,
-        string $userName,
+        $processId,
+        $userName,
         AuthInterface $authentication,
         Client $client,
-        bool $throwsExceptions = false
+        $throwsExceptions = false
     ) {
         $this->processId = $processId;
         $this->userName  = $userName;
+
         parent::__construct($authentication, $client, $throwsExceptions);
     }
 
@@ -43,7 +41,7 @@ class Process extends AbstractSection {
      *
      * @return endpoint instance
      */
-    public function __get(string $name) : EndpointInterface {
+    public function __get($name) {
         $className = $this->getEndpointClassName($name);
 
         return new $className(
@@ -52,5 +50,23 @@ class Process extends AbstractSection {
             $this->authentication,
             $this->client
         );
+    }
+
+    /**
+     * returns the endpoint called.
+     *
+     * @param string $name
+     * @param array  $args
+     *
+     * @return endpoint instance
+     */
+    public function __call($name, array $args) {
+        $className = $this->getSectionClassName($name);
+        $args[]    = $this->processId;
+        $args[]    = $this->userName;
+        $args[]    = $this->authentication;
+        $args[]    = $this->client;
+
+        return new $className(...$args);
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Endpoint\Profile;
 
 /**
@@ -15,7 +13,7 @@ class Processes extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function listAll(array $filters = []) : array {
+    public function listAll(array $filters = []) {
         return $this->sendGet(
             sprintf('/profiles/%s/processes', $this->userName),
             $filters
@@ -25,11 +23,18 @@ class Processes extends AbstractProfileEndpoint {
     /**
      * Retrieves a processe given its slug.
      *
-     * @param string $processId
+     * @param int $processId
      *
      * @return array Response
      */
-    public function getOne(string $processId) : array {
+    public function getOne($processId) {
+        assert(
+            is_int($processId),
+            new \RuntimeException(
+                sprintf('Parameter "$processId" should be a int. (%s)', $processId)
+            )
+        );
+
         return $this->sendGet(
             sprintf('/profiles/%s/processes/%s', $this->userName, $processId)
         );

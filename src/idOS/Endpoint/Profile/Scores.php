@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Endpoint\Profile;
 
 /**
@@ -18,10 +16,29 @@ class Scores extends AbstractProfileEndpoint {
      * @return array Response
      */
     public function createNew(
-        string $attribute,
-        string $name,
-        float $value
-    ) : array {
+        $attribute,
+        $name,
+        $value
+    ) {
+        assert(
+            is_string($attribute),
+            new \RuntimeException(
+                sprintf('Parameter "$attribute" should be a string. (%s)', $attribute)
+            )
+        );
+        assert(
+            is_string($name),
+            new \RuntimeException(
+                sprintf('Parameter "$name" should be a string. (%s)', $name)
+            )
+        );
+        assert(
+            is_float($value),
+            new \RuntimeException(
+                sprintf('Parameter "$value" should be a float. (%s)', $value)
+            )
+        );
+
         return $this->sendPost(
             sprintf('/profiles/%s/scores', $this->userName),
             [],
@@ -43,10 +60,29 @@ class Scores extends AbstractProfileEndpoint {
      * @return array Response
      */
     public function upsertOne(
-        string $attribute,
-        string $name,
-        float $value
-    ) : array {
+        $attribute,
+        $name,
+        $value
+    ) {
+        assert(
+            is_string($attribute),
+            new \RuntimeException(
+                sprintf('Parameter "$attribute" should be a string. (%s)', $attribute)
+            )
+        );
+        assert(
+            is_string($name),
+            new \RuntimeException(
+                sprintf('Parameter "$name" should be a string. (%s)', $name)
+            )
+        );
+        assert(
+            is_float($value),
+            new \RuntimeException(
+                sprintf('Parameter "$value" should be a float. (%s)', $value)
+            )
+        );
+
         return $this->sendPut(
             sprintf('/profiles/%s/scores', $this->userName),
             [],
@@ -65,7 +101,7 @@ class Scores extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function listAll(array $filters = []) : array {
+    public function listAll(array $filters = []) {
         return $this->sendGet(
             sprintf('/profiles/%s/scores', $this->userName),
             $filters
@@ -79,7 +115,14 @@ class Scores extends AbstractProfileEndpoint {
      *
      * @return
      */
-    public function getOne(string $name) : array {
+    public function getOne($name) {
+        assert(
+            is_string($name),
+            new \RuntimeException(
+                sprintf('Parameter "$name" should be a string. (%s)', $name)
+            )
+        );
+
         return $this->sendGet(
             sprintf('/profiles/%s/scores/%s', $this->userName, $name)
         );
@@ -94,7 +137,26 @@ class Scores extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function updateOne(string $attribute, string $name, float $value) : array {
+    public function updateOne($attribute, $name, $value) {
+        assert(
+            is_string($attribute),
+            new \RuntimeException(
+                sprintf('Parameter "$attribute" should be a string. (%s)', $attribute)
+            )
+        );
+        assert(
+            is_string($name),
+            new \RuntimeException(
+                sprintf('Parameter "$name" should be a string. (%s)', $name)
+            )
+        );
+        assert(
+            is_float($value),
+            new \RuntimeException(
+                sprintf('Parameter "$value" should be a float. (%s)', $value)
+            )
+        );
+
         return $this->sendPatch(
             sprintf('/profiles/%s/scores/%s', $this->userName, $name),
             [],
@@ -112,7 +174,14 @@ class Scores extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function deleteOne(string $name) : array {
+    public function deleteOne($name) {
+        assert(
+            is_string($name),
+            new \RuntimeException(
+                sprintf('Parameter "$name" should be a string. (%s)', $name)
+            )
+        );
+
         return $this->sendDelete(
             sprintf('/profiles/%s/scores/%s', $this->userName, $name)
         );
@@ -125,7 +194,7 @@ class Scores extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function deleteAll(array $filters = []) : array {
+    public function deleteAll(array $filters = []) {
         return $this->sendDelete(
             sprintf('/profiles/%s/scores', $this->userName),
             $filters

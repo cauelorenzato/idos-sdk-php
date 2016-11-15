@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Endpoint\Profile;
 
 /**
@@ -12,15 +10,21 @@ class Sources extends AbstractProfileEndpoint {
      * Creates a new source for the given username.
      *
      * @param string $name
-     * @param string $ipaddr
      * @param array  $tags
      *
      * @return array Response
      */
     public function createNew(
-        string $name,
+        $name,
         array $tags
-    ) : array {
+    ) {
+        assert(
+            is_string($name),
+            new \RuntimeException(
+                sprintf('Parameter "$name" should be a string. (%s)', $name)
+            )
+        );
+
         $array = [
             'name' => $name,
             'tags' => $tags
@@ -40,7 +44,7 @@ class Sources extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function listAll(array $filters = []) : array {
+    public function listAll(array $filters = []) {
         return $this->sendGet(
             sprintf('/profiles/%s/sources', $this->userName),
             $filters
@@ -54,7 +58,14 @@ class Sources extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function getOne(int $sourceId) : array {
+    public function getOne($sourceId) {
+        assert(
+            is_int($sourceId),
+            new \RuntimeException(
+                sprintf('Parameter "$sourceId" should be a int. (%s)', $sourceId)
+            )
+        );
+
         return $this->sendGet(
             sprintf('/profiles/%s/sources/%s', $this->userName, $sourceId)
         );
@@ -64,17 +75,31 @@ class Sources extends AbstractProfileEndpoint {
      * Updates a source in the given profile.
      *
      * @param int    $sourceId
-     * @param string $ipaddr
      * @param string $tags
+     * @param int $otpCode
      *
      * @return array Response
      */
-    public function updateOne(int $sourceId, array $tags, int $otpCode = null, string $ipaddr = '') : array {
+    public function updateOne($sourceId, array $tags, $otpCode = null) {
+        assert(
+            is_int($sourceId),
+            new \RuntimeException(
+                sprintf('Parameter "$sourceId" should be a int. (%s)', $sourceId)
+            )
+        );
+
         $array = [
             'tags' => $tags
         ];
 
         if ($otpCode !== null) {
+            assert(
+                is_int($otpCode),
+                new \RuntimeException(
+                    sprintf('Parameter "$otpCode" should be a int. (%s)', $otpCode)
+                )
+            );
+
             $array['otpCode'] = $otpCode;
         }
 
@@ -92,7 +117,13 @@ class Sources extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function deleteOne(string $sourceId) : array {
+    public function deleteOne($sourceId) {
+        assert(
+            is_int($sourceId),
+            new \RuntimeException(
+                sprintf('Parameter "$sourceId" should be a int. (%s)', $sourceId)
+            )
+        );
         return $this->sendDelete(
             sprintf('/profiles/%s/sources/%s', $this->userName, $sourceId)
         );
@@ -105,7 +136,7 @@ class Sources extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function deleteAll(array $filters = []) : array {
+    public function deleteAll(array $filters = []) {
         return $this->sendDelete(
             sprintf('/profiles/%s/sources', $this->userName),
             $filters

@@ -1,13 +1,12 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS;
 
 use GuzzleHttp\Client;
 use idOS\Auth\AuthInterface;
-use idOS\Section\Company;
 use idOS\Section\Profile;
+use idOS\Section\Profile\Process;
+use idOS\Section\Company;
 
 class SDK {
     /**
@@ -30,7 +29,7 @@ class SDK {
      *
      * @return SDK instance
      */
-    public static function create(AuthInterface $authentication, bool $throwsExceptions = false) {
+    public static function create(AuthInterface $authentication, $throwsExceptions = false) {
         return new static(
             $authentication,
             new Client(),
@@ -45,7 +44,7 @@ class SDK {
      * @param Client        $client
      * @param bool|bool     $throwsExceptions
      */
-    public function __construct(AuthInterface $authentication, Client $client, bool $throwsExceptions = false) {
+    public function __construct(AuthInterface $authentication, Client $client, $throwsExceptions = false) {
         $this->authentication   = $authentication;
         $this->client           = $client;
         $this->throwsExceptions = $throwsExceptions;
@@ -56,7 +55,7 @@ class SDK {
      *
      * @param AuthInterface $authentication
      */
-    public function setAuth(AuthInterface $authentication) : self {
+    public function setAuth(AuthInterface $authentication) {
         $this->authentication = $authentication;
 
         return $this;
@@ -67,7 +66,7 @@ class SDK {
      *
      * @return AuthInterface auth
      */
-    public function getAuth() : AuthInterface {
+    public function getAuth() {
         return $this->authentication;
     }
 
@@ -76,7 +75,7 @@ class SDK {
      *
      * @param Client $client
      */
-    public function setClient(Client $client) : self {
+    public function setClient(Client $client) {
         $this->client = $client;
 
         return $this;
@@ -87,7 +86,7 @@ class SDK {
      *
      * @return GuzzeHttp\Client client
      */
-    public function getClient() : Client {
+    public function getClient() {
         return $this->client;
     }
 
@@ -96,7 +95,7 @@ class SDK {
      *
      * @param bool $throws
      */
-    public function setThrowsExceptions(bool $throws) : self {
+    public function setThrowsExceptions($throws) {
         $this->throwsExceptions = $throws;
 
         return $this;
@@ -107,7 +106,7 @@ class SDK {
      *
      * @return bool throwsExceptions
      */
-    public function getThrowsExceptions() : bool {
+    public function getThrowsExceptions() {
         return $this->throwsExceptions;
     }
 
@@ -118,7 +117,7 @@ class SDK {
      *
      * @return Section\Profile instance
      */
-    public function profile(string $userName) : Profile {
+    public function profile($userName) {
         return new Profile(
             $userName,
             $this->authentication,
@@ -134,7 +133,7 @@ class SDK {
      *
      * @return Endpoint\Company instance
      */
-    public function company(string $companySlug) : Company {
+    public function company($companySlug) {
         return new Company(
             $companySlug,
             $this->authentication,
@@ -150,13 +149,12 @@ class SDK {
      *
      * @return new instance of the given class
      */
-    public function __get(string $name) {
+    public function __get($name) {
         $className = $this->getEndpointClassName($name);
 
         return new $className(
             $this->authentication,
-            $this->client,
-            $this->throwsExceptions
+            $this->client
         );
     }
 
@@ -168,7 +166,7 @@ class SDK {
      *
      * @return new instance of the given class
      */
-    public function __call(string $name, array $args) {
+    public function __call($name, array $args) {
         $className = $this->getSectionClassName($name);
         $args[]    = $this->authentication;
         $args[]    = $this->client;
@@ -183,7 +181,7 @@ class SDK {
      *
      * @return string className
      */
-    protected function getEndpointClassName(string $name) : string {
+    protected function getEndpointClassName($name) {
         $className = sprintf(
             '%s\\%s\\%s',
             'idOS',

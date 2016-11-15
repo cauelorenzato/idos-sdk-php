@@ -1,4 +1,4 @@
-Veridu idOS PHP SDK for PHP7 (for PHP5 [Click Here](https://github.com/veridu/idos-sdk-php/tree/php5))
+Veridu idOS PHP SDK for PHP5 (for PHP7 [Click Here](https://github.com/veridu/idos-sdk-php/tree/php7))
 ===================
 
 Installation
@@ -13,7 +13,7 @@ If you are using composer, please edit your `composer.json` and add the followin
 ```json
 {
     "require": {
-        "veridu/idos-sdk-php": "^1.0"
+        "veridu/idos-sdk-php": "^0.1"
     }
 }
 ```

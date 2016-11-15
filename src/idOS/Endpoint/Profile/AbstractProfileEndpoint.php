@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Endpoint\Profile;
 
 use GuzzleHttp\Client;
@@ -11,8 +9,6 @@ use idOS\Endpoint\AbstractEndpoint;
 abstract class AbstractProfileEndpoint extends AbstractEndpoint {
     /**
      * The username to be stored and used in all /profiles endpoints.
-     *
-     * @var string
      */
     protected $userName;
 
@@ -25,10 +21,10 @@ abstract class AbstractProfileEndpoint extends AbstractEndpoint {
      * @param bool|bool     $throwsExceptions
      */
     public function __construct(
-        string $userName,
+        $userName,
         AuthInterface $authentication,
         Client $client,
-        bool $throwsExceptions = false
+        $throwsExceptions = false
     ) {
         $this->userName = $userName;
         parent::__construct($authentication, $client, $throwsExceptions);

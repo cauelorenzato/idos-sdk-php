@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Endpoint\Profile;
 
 /**
@@ -15,7 +13,7 @@ class Attributes extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function listAll(array $filter = []) : array {
+    public function listAll(array $filter = []) {
         return $this->sendGet(
             sprintf('/profiles/%s/attributes', $this->userName),
             $filter
@@ -29,7 +27,14 @@ class Attributes extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function getOne(string $attributeName) : array {
+    public function getOne($attributeName) {
+        assert(
+            is_string($attributeName),
+            new \RuntimeException(
+                sprintf('Parameter "$attributeName" should be a string. (%s)', $attributeName)
+            )
+        );
+
         return $this->sendGet(
             sprintf('/profiles/%s/attributes/%s', $this->userName, $attributeName)
         );

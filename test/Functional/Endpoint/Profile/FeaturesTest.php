@@ -55,6 +55,7 @@ class FeaturesTest extends AbstractFunctional {
             ->Profile($this->credentials['username'])
             ->Features->deleteAll();
 
+
         $response = $this->sdk
             ->Profile($this->credentials['username'])
             ->Features->createNew($this->sourceId, 'name-test', 'value-test', 'string');

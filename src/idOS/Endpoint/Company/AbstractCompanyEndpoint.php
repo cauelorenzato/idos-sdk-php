@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Endpoint\Company;
 
 use GuzzleHttp\Client;
@@ -9,11 +7,6 @@ use idOS\Auth\AuthInterface;
 use idOS\Endpoint\AbstractEndpoint;
 
 abstract class AbstractCompanyEndpoint extends AbstractEndpoint {
-    /**
-     * The company slug to be stored and used in all /companies endpoints.
-     *
-     * @var string
-     */
     protected $companySlug;
 
     /**

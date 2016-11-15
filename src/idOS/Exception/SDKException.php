@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Exception;
 
 class SDKException extends \Exception {
@@ -12,9 +10,9 @@ class SDKException extends \Exception {
     protected $message;
 
     public function __construct(
-        String $message,
-        String $type,
-        String $link
+        $message,
+        $type,
+        $link
     ) {
         $this->message = $message;
         $this->type    = $type;

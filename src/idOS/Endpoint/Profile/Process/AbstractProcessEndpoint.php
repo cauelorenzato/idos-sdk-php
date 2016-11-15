@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Endpoint\Profile\Process;
 
 use GuzzleHttp\Client;
@@ -21,11 +19,11 @@ abstract class AbstractProcessEndpoint extends AbstractEndpoint {
      * @param bool|bool     $throwsExceptions
      */
     public function __construct(
-        int $processId,
-        string $userName,
+        $processId,
+        $userName,
         AuthInterface $authentication,
         Client $client,
-        bool $throwsExceptions = false
+        $throwsExceptions = false
     ) {
         $this->processId = $processId;
         $this->userName  = $userName;

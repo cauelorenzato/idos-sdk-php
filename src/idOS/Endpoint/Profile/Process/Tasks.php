@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Endpoint\Profile\Process;
 
 /**
@@ -20,12 +18,12 @@ class Tasks extends AbstractProcessEndpoint {
      * @return array Response
      */
     public function createNew(
-        string $name,
-        string $event,
-        bool $running,
-        bool $success,
-        string $message
-    ) : array {
+        $name,
+        $event,
+        $running,
+        $success,
+        $message
+    ) {
 
         return $this->sendPost(
             sprintf('/profiles/%s/processes/%s/tasks', $this->userName, $this->processId),
@@ -47,7 +45,7 @@ class Tasks extends AbstractProcessEndpoint {
      *
      * @return array Response
      */
-    public function listAll(array $filters = []) : array {
+    public function listAll(array $filters = []) {
         return $this->sendGet(
             sprintf('/profiles/%s/processes/%s/tasks', $this->userName, $this->processId),
             $filters
@@ -61,7 +59,7 @@ class Tasks extends AbstractProcessEndpoint {
      *
      * @return array Response
      */
-    public function getOne(int $taskId) : array {
+    public function getOne($taskId) {
         return $this->sendGet(
             sprintf('/profiles/%s/processes/%s/tasks/%s', $this->userName, $this->processId, $taskId)
         );
@@ -77,13 +75,13 @@ class Tasks extends AbstractProcessEndpoint {
      * @return array Response
      */
     public function updateOne(
-        int $taskId,
-        string $name,
-        string $event,
-        bool $running,
-        bool $success,
-        string $message
-    ) : array {
+        $taskId,
+        $name,
+        $event,
+        $running,
+        $success,
+        $message
+    ) {
         return $this->sendPatch(
             sprintf('/profiles/%s/processes/%s/tasks/%s', $this->userName, $this->processId, $taskId),
             [],

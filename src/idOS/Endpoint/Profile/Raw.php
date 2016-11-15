@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Endpoint\Profile;
 
 /**
@@ -18,10 +16,24 @@ class Raw extends AbstractProfileEndpoint {
      * @return array Response
      */
     public function createNew(
-        int $sourceId,
-        string $collectionName,
+        $sourceId,
+        $collectionName,
         array $data
-    ) : array {
+    ) {
+        assert(
+            is_int($sourceId),
+            new \RuntimeException(
+                sprintf('Parameter "$sourceId" should be a int. (%s)', $sourceId)
+            )
+        );
+
+        assert(
+            is_string($collectionName),
+            new \RuntimeException(
+                sprintf('Parameter "$collectionName" should be a string. (%s)', $collectionName)
+            )
+        );
+
         return $this->sendPost(
             sprintf('/profiles/%s/raw', $this->userName),
             [],
@@ -43,10 +55,24 @@ class Raw extends AbstractProfileEndpoint {
      * @return array Response
      */
     public function upsertOne(
-        int $sourceId,
-        string $collectionName,
+        $sourceId,
+        $collectionName,
         array $data
-    ) : array {
+    ) {
+        assert(
+            is_int($sourceId),
+            new \RuntimeException(
+                sprintf('Parameter "$sourceId" should be a int. (%s)', $sourceId)
+            )
+        );
+
+        assert(
+            is_string($collectionName),
+            new \RuntimeException(
+                sprintf('Parameter "$collectionName" should be a string. (%s)', $collectionName)
+            )
+        );
+
         return $this->sendPut(
             sprintf('/profiles/%s/raw', $this->userName),
             [],
@@ -65,14 +91,14 @@ class Raw extends AbstractProfileEndpoint {
      *
      * @return array Response
      */
-    public function listAll(array $filters = []) : array {
+    public function listAll(array $filters = []) {
         return $this->sendGet(
             sprintf('/profiles/%s/raw', $this->userName),
             $filters
         );
     }
 
-    public function deleteAll(array $filters = []) : array {
+    public function deleteAll(array $filters = []) {
         return $this->sendDelete(
             sprintf('/profiles/%s/raw', $this->userName),
             $filters

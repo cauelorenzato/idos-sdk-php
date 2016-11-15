@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Section;
 
 use GuzzleHttp\Client;
@@ -23,10 +21,10 @@ class Company extends AbstractSection {
      * @param bool|bool     $throwsExceptions
      */
     public function __construct(
-        string $companySlug,
-        AuthInterface $authentication,
-        Client $client,
-        bool $throwsExceptions = false
+        $companySlug,
+        $authentication,
+        $client,
+        $throwsExceptions = false
     ) {
         $this->companySlug = $companySlug;
         parent::__construct($authentication, $client, $throwsExceptions);
@@ -39,7 +37,7 @@ class Company extends AbstractSection {
      *
      * @return endpoint instance
      */
-    public function __get(string $name) : EndpointInterface {
+    public function __get($name) {
         $className = $this->getEndpointClassName($name);
 
         return new $className(
@@ -57,7 +55,7 @@ class Company extends AbstractSection {
      *
      * @return endpoint instance
      */
-    public function __call(string $name, array $args) : SectionInterface {
+    public function __call($name, $args) {
         $className = $this->getSectionClassName($name);
         $args[]    = $this->companySlug;
         $args[]    = $this->authentication;

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Auth;
 
 /**
@@ -17,7 +15,7 @@ class None extends AbstractAuth {
     /**
      * Returns an empty string.
      */
-    public function getToken() : string {
+    public function getToken() {
         return '';
     }
 }

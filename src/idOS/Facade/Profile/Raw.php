@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace idOS\Facade\Profile;
 
 use GuzzleHttp\Client;
@@ -18,9 +16,9 @@ class Raw {
      * @return Raw instance
      */
     private static function getInstance(
-        string $userName,
+        $userName,
         Auth $auth
-    ) : RawEndpoint {
+    ) {
         return new RawEndpoint(
             $userName,
             $auth,
@@ -40,9 +38,9 @@ class Raw {
      * @return array response
      */
     public static function createNew(
-        string $userName,
-        int $sourceId,
-        string $collectionName,
+        $userName,
+        $sourceId,
+        $collectionName,
         array $data,
         Auth $auth
     ) {
@@ -60,7 +58,7 @@ class Raw {
      * @return array response
      */
     public static function listAll(
-        string $userName,
+        $userName,
         Auth $auth,
         array $filters = []
     ) {
