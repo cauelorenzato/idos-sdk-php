@@ -63,7 +63,7 @@ abstract class AbstractSection implements SectionInterface {
      * Return an endpoint instance properly initialized.
      *
      * @param string $name
-     * @param array  $args
+     * @param array  $argsw
      *
      * @return \idOS\Endpoint\EndpointInterface
      */
@@ -76,7 +76,7 @@ abstract class AbstractSection implements SectionInterface {
         $args[] = $this->throwsExceptions;
         $args[] = $this->baseUrl;
 
-        return new $className(...$args);
+        return new $className($args[0], $args[1], $args[2], $args[3], $args[4]);
     }
 
     /**
@@ -102,7 +102,7 @@ abstract class AbstractSection implements SectionInterface {
                 )
             );
         }
-
+        
         return $className;
     }
 
@@ -114,16 +114,9 @@ abstract class AbstractSection implements SectionInterface {
      *
      * @return \idOS\Section\SectionInterface
      */
-    protected function createSection($name, array $args) {
+    protected function createSection($name, $authentication, $client, $throwsExceptions, $baseUrl) {
         $className = $this->getSectionClassName($name);
-
-        // aditional parameters
-        $args[] = $this->authentication;
-        $args[] = $this->client;
-        $args[] = $this->throwsExceptions;
-        $args[] = $this->baseUrl;
-
-        return new $className(...$args);
+        return new $className($authentication, $client, $throwsExceptions, $baseUrl);
     }
 
     /**
@@ -139,9 +132,15 @@ abstract class AbstractSection implements SectionInterface {
     public function __construct(
         AuthInterface $authentication,
         Client $client,
-        $throwsExceptions = false,
-        $baseUrl = 'https://api.idos.io/1.0/'
-    ) {
+        $throwsExceptions,
+        $baseUrl
+    ) {        
+        if (is_null($throwsExceptions))
+            $throwsExceptions = false;
+
+        if (is_null($baseUrl))
+            $baseUrl = 'https://api.idos.io/1.0/';
+
         $this->authentication   = $authentication;
         $this->client           = $client;
         $this->throwsExceptions = $throwsExceptions;

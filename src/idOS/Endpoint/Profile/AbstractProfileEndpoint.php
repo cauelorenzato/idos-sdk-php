@@ -29,9 +29,15 @@ abstract class AbstractProfileEndpoint extends AbstractEndpoint {
         $userName,
         AuthInterface $authentication,
         Client $client,
-        $throwsExceptions = false,
-        $baseUrl = 'https://api.idos.io/1.0/'
+        $throwsExceptions,
+        $baseUrl
     ) {
+        if (is_null($throwsExceptions))
+            $throwsExceptions = false;
+
+        if (is_null($baseUrl))
+            $baseUrl = 'https://api.idos.io/1.0/';
+
         $this->userName = $userName;
         parent::__construct($authentication, $client, $throwsExceptions, $baseUrl);
     }

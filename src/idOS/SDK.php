@@ -44,9 +44,15 @@ class SDK {
      */
     public static function create(
         AuthInterface $authentication,
-        $throwsExceptions = false,
-        $baseUrl = 'https://api.idos.io/1.0/'
+        $throwsExceptions = null,
+        $baseUrl = null
     ) {
+        if (is_null($throwsExceptions))
+            $throwsExceptions = false;
+
+        if (is_null($baseUrl))
+            $baseUrl = 'https://api.idos.io/1.0/';
+
         return new static(
             $authentication,
             new Client(),
@@ -68,8 +74,8 @@ class SDK {
     public function __construct(
         AuthInterface $authentication,
         Client $client,
-        $throwsExceptions = false,
-        $baseUrl = 'https://api.idos.io/1.0/'
+        $throwsExceptions,
+        $baseUrl
     ) {
         $this->authentication   = $authentication;
         $this->client           = $client;
@@ -196,7 +202,7 @@ class SDK {
         $args[]    = $this->throwsExceptions;
         $args[]    = $this->baseUrl;
 
-        return new $className(...$args);
+        return new $className($args[0], $args[1], $args[2], $args[3], $args[4]);
     }
 
     /**

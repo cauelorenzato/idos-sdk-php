@@ -26,8 +26,8 @@ class Profile extends AbstractSection {
         $userName,
         AuthInterface $authentication,
         Client $client,
-        $throwsExceptions = false,
-		$baseUrl = 'https://api.idos.io/1.0/'
+        $throwsExceptions,
+		$baseUrl
     ) {
         $this->userName = $userName;
         parent::__construct($authentication, $client, $throwsExceptions, $baseUrl);
@@ -52,7 +52,7 @@ class Profile extends AbstractSection {
      *
      * @return \idOS\Section\SectionInterface
      */
-    public function __call(string $name, array $args) {
+    public function __call($name, array $args) {
         $args[] = $this->userName;
         return $this->createSection($name, $args);
     }

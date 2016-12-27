@@ -10,13 +10,14 @@ class ProcessesTest extends AbstractFunctional {
     }
 
     public function testListAll() {
+        $this->sdk->setBaseUrl('http://localhost:8000');
         $response = $this->sdk
             ->Profile($this->credentials['username'])
             ->Processes->listAll();
 
         $this->assertTrue($response['status']);
         $this->assertNotEmpty($response['data']);
-
+       
         foreach ($response['data'] as $process) {
             $this->assertInternalType('integer', $process['id']);
             $this->assertInternalType('string', $process['name']);

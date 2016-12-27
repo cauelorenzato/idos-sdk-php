@@ -26,9 +26,15 @@ class Process extends AbstractSection {
         $userName,
         AuthInterface $authentication,
         Client $client,
-        $throwsExceptions = false, 
-        $baseUrl = 'https://api.idos.io/1.0/'
+        $throwsExceptions, 
+        $baseUrl
     ) {
+        if (is_null($throwsExceptions))
+            $throwsExceptions = false;
+
+        if (is_null($baseUrl))
+            $baseUrl = 'https://api.idos.io/1.0/';
+
         $this->processId = $processId;
         $this->userName  = $userName;
 
@@ -70,6 +76,6 @@ class Process extends AbstractSection {
         $args[]    = $this->authentication;
         $args[]    = $this->client;
 
-        return new $className(...$args);
+        return new $className($args[0], $args[1], $args[2], $args[3]);
     }
 }
